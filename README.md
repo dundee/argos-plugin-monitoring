@@ -1,5 +1,10 @@
 # Monitoring plugin for Argos
 
+## Available checks
+
+* server load
+* Wordpress site up-to-date
+
 ## Instalation
 
 ```bash
