@@ -3,14 +3,17 @@ import logging
 import os
 import sys
 
-from .wordpress import check_wordpress_domains
+from .constants import (
+    CONFIG_FILE,
+    ERROR,
+    WARNING,
+    IMAGE_OK,
+    IMAGE_WARNING,
+    IMAGE_ERROR,
+)
+from .checks import ALL_CHECKS
 
 PY2 = sys.version_info[0] == 2
-
-CONFIG_FILE = '.config/argos/.monitoring-settings.py'
-
-ERROR = 0
-WARNING = 1
 
 
 def run():
@@ -31,11 +34,11 @@ def run():
     run_checks(config, messages)
 
     if messages[ERROR]:
-        print('{} | iconName=error-symbolic'.format(len(messages[ERROR])))
+        print('{} | iconName={}'.format(len(messages[ERROR]), IMAGE_ERROR))
     elif messages[WARNING]:
-        print('{} | iconName=important'.format(len(messages[WARNING])))
+        print('{} | iconName={}'.format(len(messages[WARNING]), IMAGE_WARNING))
     else:
-        print('OK | color=#0F0')
+        print('| iconName={}'.format(IMAGE_OK))
 
     print('---')
 
@@ -51,5 +54,5 @@ def run_checks(config, messages):
     checks = config.get('CHECKS', [])
 
     for check in checks:
-        if check == 'wordpress':
-            check_wordpress_domains(config, messages)
+        if ALL_CHECKS.get(check):
+            ALL_CHECKS[check](config, messages)
