@@ -5,6 +5,11 @@
 * server load
 * Wordpress site up-to-date
 
+## Requirements
+
+* Python 2 or 3
+* [Argos](https://github.com/p-e-w/argos) or [BitBar](https://getbitbar.com/)
+
 ## Instalation
 
 ```bash
